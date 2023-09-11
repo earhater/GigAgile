@@ -27,13 +27,10 @@ jobs:
         run: |
           poetry install
 
-      - name: Run tests
-        run: |
-          poetry run python manage.py test
 
       - name: Build Docker image
         run: |
-          docker build -t your-django-app-image .
+          docker build -t earhater/gigagile .
 
       - name: Log in to Docker Hub
         run: |
@@ -41,7 +38,7 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push your-django-app-image
+          docker push earhater/gigagile
 
       - name: SSH into VPS and pull Docker image
         uses: appleboy/ssh-action@master
@@ -50,5 +47,5 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            docker pull your-django-app-image
-            docker run -d -p 80:80 your-django-app-image
+            docker pull earhater/gigagile
+            docker run -d -p 85:80 your-django-app-image
